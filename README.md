@@ -2,8 +2,6 @@
 
 ![image.png](images/image.png)
 
-- Cluster Master để điều phối cho cụm Indexer, để Indexer còn lại có thể backup dữ liệu nếu một trong 2 Indexer bị hỏng.
-
 ## 2. Triển khai
 
 ### 2.1 Cấu hình trên Ubuntu Server
