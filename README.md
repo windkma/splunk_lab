@@ -24,6 +24,7 @@
     ![image.png](images/image%201.png)
     ![image.png](images/image%202.png)
   - Tạo các index `win_sec` `win_sys` `win_app` `sysmon` `nix_auth` `nix_sys` `pfsense`
+
     ```powershell
     docker exec -u splunk splunk-master bash -c 'cat <<EOF > /opt/splunk/etc/master-apps/_cluster/local/indexes.conf
     [win_sec]
@@ -63,6 +64,7 @@
     thawedPath = \$SPLUNK_DB/pfsense/thaweddb
     EOF'
     ```
+
   - Push các index trên máy Cluster Master này xuống các máy Indexer, vào **Configuration Bundle Actions** và ấn Push, hoặc gõ lệnh sau
     ```powershell
     docker exec -u splunk splunk-master /opt/splunk/bin/splunk apply cluster-bundle --answer-yes -auth admin:Admin@123
@@ -82,6 +84,7 @@
   ```
 - Cấu hình input.conf và output.conf
   - Mở file `/opt/splunkforwarder/etc/system/local/outputs.conf`
+
     ```powershell
     [tcpout]
     defaultGroup = default-autolb-group
@@ -89,6 +92,7 @@
     [tcpout:default-autolb-group]
     server = 192.168.60.20:9997, 192.168.60.20:9998
     ```
+
   - Mở file `/opt/splunkforwarder/etc/system/local/inputs.conf`
     ```powershell
     [monitor:///var/log/auth.log]
@@ -96,6 +100,7 @@
     index = nix_auth
     sourcetype = sys_log
     ```
+
 - Cấp quyền cho UF đọc file hệ thống
   ```powershell
   sudo chmod 644 /var/log/auth.log
@@ -105,13 +110,14 @@
 
 - Cài sysmon, tải cấu hình `sysmonconfig-export.xml`
 - Cài Splunk Universal Forwarder for Windows
-- Trỏ về máy DS
+- Trỏ về máy Deployment Server
   ```powershell
   cd "C:\Program Files\SplunkUniversalForwarder\bin"
   splunk.exe set deploy-poll 192.168.60.20:8090
   ```
 - Cấu hình Input.conf và output.conf
   - `C:\Program Files\SplunkUniversalForwarder\etc\system\local\outputs.conf`
+
     ```powershell
     [tcpout]
     defaultGroup = default-autolb-group
@@ -119,7 +125,9 @@
     [tcpout:default-autolb-group]
     server = 192.168.60.20:9997, 192.168.60.20:9998
     ```
+
   - `C:\Program Files\SplunkUniversalForwarder\etc\system\local\inputs.conf`
+
     ```powershell
     [WinEventLog://Security]
     disabled =0
