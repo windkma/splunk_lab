@@ -1,5 +1,3 @@
-# Task 3.1
-
 Description: Cài môi trường và viết Rules cho T1219-Remote Access Software, tạo Dashboard
 
 ### 1. Thiết lập môi trường
@@ -47,7 +45,7 @@ Description: Cài môi trường và viết Rules cho T1219-Remote Access Softwa
   | regex Image="(?i)(teamviewer.*|anydesk.*|screenconnect.*|ammyy.*)\.exe$"
   | table _time, host, Image, User, CommandLine
   ```
-  ![image.png](images/image 6.png)
+  ![image.png](images/image%206.png)
 - Detect process và commandline chạy ở chế độ ẩn
   ```powershell
   index=sysmon sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1
@@ -56,18 +54,18 @@ Description: Cài môi trường và viết Rules cho T1219-Remote Access Softwa
   | where match(lower(CommandLine), "\s+(\/s|\-\-silent|\-\-install|\-\-start\-with\-win|\-quiet|\-slient)(\s+|$)")
   | table _time, host, Image, User, CommandLine
   ```
-  ![image.png](images/image 7.png)
+  ![image.png](images/image%207.png)
 - Phát hiện Pipe mật khẩu vào AnyDesk qua CLI
   ```powershell
   index=sysmon sourcetype="WinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=1 CommandLine="*AnyDesk*"
   | where match(lower(CommandLine), "--set-password")
   | table _time, host, User, Image, CommandLine
   ```
-  ![image.png](images/image 8.png)
+  ![image.png](images/image%208.png)
 
 ### 3. Dashboard
 
-![image.png](images/image 9.png)
+![image.png](images/image%209.png)
 
 - Ý nghĩa khi tạo Dashboard
   - Total Infected Host: có bao nhiêu máy bị xâm phạm
