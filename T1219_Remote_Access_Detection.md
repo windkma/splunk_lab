@@ -36,7 +36,7 @@ Description: Cài môi trường và viết Rules cho T1219-Remote Access Softwa
   Remove-Item $file1 -ErrorAction Ignore
   ```
 
-### 2. Rules
+### 2. SPL
 
 - Detect processes và commandline
   ```powershell
